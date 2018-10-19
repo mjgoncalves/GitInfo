@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">RetrofitApp</string>
-    <string name="username">your github username</string>
-    <string name="login">login</string>
+    <string name="username">github-login</string>
+    <string name="login">LOGIN</string>
     <string name="repositories">repositories</string>
-    <string name="username_needed">Please, enter your username!</string>
+    <string name="username_needed">Please, enter your login!</string>
     <string name="field_username">Username:</string>
     <string name="field_login">Login:</string>
     <string name="field_email">Email:</string>
@@ -11,4 +11,8 @@
     <string name="field_following">Following:</string>
     <string name="no_name">"No name provided!"</string>
     <string name="no_mail">No E-mail provided!</string>
+    <string name="followers">FOLLOWERS:</string>
+    <string name="e_mail">E-MAIL:</string>
+    <string name="following">FOLLOWING:</string>
+    <string name="retrofit_app">RETROFIT APP</string>
 </resources>

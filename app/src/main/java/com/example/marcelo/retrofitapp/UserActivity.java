@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import model.GitHubUser;
 import rest.APIClient;
@@ -19,11 +22,10 @@ public class UserActivity extends AppCompatActivity {
 
     private static final String TAG = "UserActivity";
 
+    private CircleImageView profilePhoto;
     private TextView username, login, email;
     private TextView following, followers;
     private Button btnShowRepos;
-    private Intent incomingIntent;
-    private Bundle extras;
     private String extraString;
 
     @Override
@@ -47,27 +49,32 @@ public class UserActivity extends AppCompatActivity {
                 assert response.body() != null;
                 if (response.body().getName() == null){
 
-                    username.setText(getString(R.string.field_email) + " " + getString(R.string.no_name));
+                    username.setText(getString(R.string.no_name));
+
                 }else {
 
-                    username.setText(getString(R.string.field_username) + " " + response.body().getName());
+                    username.setText(response.body().getName());
 
                 }
 
                 if (response.body().getEmail() == null){
 
-                    email.setText(getString(R.string.field_email) + " " + getString(R.string.no_mail));
+                    email.setText(getString(R.string.no_mail));
 
                 }else {
 
-                    email.setText(getString(R.string.field_email) + " " + response.body().getEmail());
+                    email.setText(response.body().getEmail());
 
                 }
 
-                login.setText(getString(R.string.field_login) + " " + response.body().getLogin());
-                followers.setText(getString(R.string.field_followers) + " " + response.body().getFollowers());
-                following.setText(getString(R.string.field_following) + " " + response.body().getFollowing());
+                login.setText(response.body().getLogin());
+                followers.setText(response.body().getFollowers());
+                following.setText(response.body().getFollowing());
 
+                Glide.with(UserActivity.this)
+                        .asBitmap()
+                        .load(response.body().getAvatar())
+                        .into(profilePhoto);
             }
 
             @Override
@@ -80,7 +87,7 @@ public class UserActivity extends AppCompatActivity {
 
     private void getIncomingIntent(){
 
-        incomingIntent = getIntent();
+        Intent incomingIntent = getIntent();
         if (incomingIntent.hasExtra("USERNAME")){
 
             extraString = incomingIntent.getStringExtra("USERNAME");
@@ -96,5 +103,6 @@ public class UserActivity extends AppCompatActivity {
         followers = findViewById(R.id.followers);
         following = findViewById(R.id.following);
         btnShowRepos = findViewById(R.id.btn_show_repos);
+        profilePhoto = findViewById(R.id.profilePhoto);
     }
 }
