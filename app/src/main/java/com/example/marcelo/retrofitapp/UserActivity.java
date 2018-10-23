@@ -7,6 +7,9 @@ import android.os.Bundle;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
+
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -34,8 +37,21 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         initWidgets();
         getIncomingIntent();
+        initButtonShowRepos();
         loadData();
 
+    }
+
+    private void initButtonShowRepos(){
+
+        btnShowRepos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserActivity.this, ReposActivity.class);
+                intent.putExtra("USERNAME", extraString);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadData() {
@@ -46,7 +62,7 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<GitHubUser> call, @NonNull Response<GitHubUser> response) {
 
-                assert response.body() != null;
+
                 if (response.body().getName() == null){
 
                     username.setText(getString(R.string.no_name));
